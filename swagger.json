@@ -1,123 +1,338 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "Your API Documentation",
-      "description": "API documentation for your project",
-      "version": "1.0.0"
+  "swagger": "2.0",
+  "info": {
+    "title": "Your API Documentation",
+    "description": "API documentation for your project",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operations related to users"
     },
-    "basePath": "/",
-    "paths": {
-      "/api/user/signin": {
-        "post": {
-          "summary": "Register a new user",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "User information",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User registered successfully"
-            }
-          }
-        }
-      },
-      "/api/user/login": {
-        "post": {
-          "summary": "Login a user",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "User information",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                },
-                "required": ["email", "password"]
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User logged in successfully"
+    {
+      "name": "Todo",
+      "description": "Operations related to todos"
+    }
+  ],
+  "paths": {
+    "/api/user/signin": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
             }
           }
-        }
-      },
-      "/api/user/{id}": {
-        "put": {
-          "summary": "Edit a user",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "description": "ID of the user to be edited",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "Authorization",
-              "in": "header",
-              "description": "Bearer token for authorization",
-              "required": true,
-              "type": "string",
-              "pattern": "^Bearer\\s.+"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "description": "User information to be updated",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "User Edited successfully"
-            }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
           }
         }
       }
     },
-    "definitions": {
-      "User": {
-        "type": "object",
-        "properties": {
-          "name": {
+    "/api/user/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Login a user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User information",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": ["email", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          }
+        }
+      }
+    },
+    "/api/user/{id}": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Edit a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user to be edited",
+            "required": true,
             "type": "string"
           },
-          "password": {
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User information to be updated",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Edited successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user to be deleted",
+            "required": true,
             "type": "string"
           },
-          "email": {
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Deleted successfully"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Get a single user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the user to be fetched",
+            "required": true,
             "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User fetched successfully"
+          }
+        }
+      }
+    },
+    "/api/todo": {
+      "post": {
+        "tags": ["Todo"],
+        "summary": "Create a Todo",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Todo Content",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo created successfully"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Todo"],
+        "summary": "Get all todos of a user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todos fetched successfully"
+          }
+        }
+      }
+    },
+    "/api/todo/{id}": {
+      "put": {
+        "tags": ["Todo"],
+        "summary": "Edit a todo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the todo to be edited",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Todo information to be updated",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo Edited successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Todo"],
+        "summary": "Delete a todo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the todo to be deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo Deleted successfully"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Todo"],
+        "summary": "Get a single todo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the todo to be fetched",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token for authorization",
+            "required": true,
+            "type": "string",
+            "pattern": "^Bearer\\s.+"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo fetched successfully"
           }
         }
       }
     }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Todo": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        }
+      }
+    }
   }
-  
+}

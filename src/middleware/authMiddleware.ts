@@ -8,10 +8,8 @@ export const protect = async (
   next: NextFunction
 ) => {
   const authHeader = req.headers.authorization;
-  console.log( authHeader?.split(" "),'token');
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
-   
 
     try {
       // Verify token
@@ -24,7 +22,9 @@ export const protect = async (
       (req as any).user = await User.findById(decoded.id).select("-password");
 
       if (!(req as any).user) {
-        return res.status(401).json({ error: "Unauthorized, token failed" });
+        return res
+          .status(401)
+          .json({ error: "Unauthorized, token failed or  no user found" });
       }
 
       next();
