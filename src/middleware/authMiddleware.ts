@@ -8,9 +8,10 @@ export const protect = async (
   next: NextFunction
 ) => {
   const authHeader = req.headers.authorization;
-
+  console.log( authHeader?.split(" "),'token');
   if (authHeader && authHeader.startsWith("Bearer ")) {
     const token = authHeader.split(" ")[1];
+   
 
     try {
       // Verify token

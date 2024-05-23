@@ -1,16 +1,19 @@
 import request from "supertest";
 import mongoose from "mongoose";
-import { app, server } from "..";
+import { app, startServer, closeServer } from "..";
 import Todo from "../models/todoSchema";
 import User from "../models/userSchema";
 import { generateToken } from "../utils/common";
+import dotenv from "dotenv";
+
+// Load test environment variables
+dotenv.config({ path: ".env.test" });
 
 let token: string;
 
 beforeAll(async () => {
-  // Connect to the database
-  const dbUrl = "mongodb://localhost:27017/testdb";
-  await mongoose.connect(dbUrl);
+  // Start the server to ensure the database is connected
+  await startServer();
 
   // Create a user and get a token
   const user = new User({
@@ -27,7 +30,7 @@ afterAll(async () => {
   await User.deleteMany({});
   await Todo.deleteMany({});
   await mongoose.connection.close();
-  server.close(); // Ensure the server is closed after tests
+  await closeServer();
 });
 
 describe("Todo API", () => {

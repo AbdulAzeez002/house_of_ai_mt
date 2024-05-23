@@ -1,28 +1,43 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express, { Request, Response } from "express";
+import express from "express";
 import connectToMongoDB from "./config/db";
 import userRouter from "./routes/userRoutes";
-import tododRouter from './routes/todoRoutes'
+import todoRouter from './routes/todoRoutes';
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../swagger.json";
 
-// Connecting to MongoDb
-connectToMongoDB();
-
-export const app = express();
+const app = express();
 const port = process.env.PORT ?? 8000;
 
-app.use(express.json()); // middleware to print json data
+// Middleware to serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Hello World!");
-// });
-
+// Routes
 app.use("/api/user", userRouter);
-app.use("/api/todo", tododRouter); 
+app.use("/api/todo", todoRouter);
 
-export const server = app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+let server: any;
 
+const startServer = async () => {
+  const dbUrl = process.env.MONGO_URI || "mongodb://localhost:27017/mydatabase";
+  await connectToMongoDB(dbUrl);
+  server = app.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port}`);
+  });
+};
 
+const closeServer = async () => {
+  if (server) {
+    await server.close();
+  }
+};
+
+if (require.main === module) {
+  startServer();
+}
+
+export { app, startServer, closeServer };
