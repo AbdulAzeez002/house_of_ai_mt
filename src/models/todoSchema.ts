@@ -1,9 +1,8 @@
 import mongoose, { Schema, Document, Mongoose } from "mongoose";
 
-interface ITodo extends Document {
-  name: string;
-  email: string;
-  password: string;
+ interface ITodo extends Document {
+  content:string,
+  user:Schema.Types.ObjectId,
 }
 
 const todoSchema: Schema = new Schema(

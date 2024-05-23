@@ -2,7 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 import express, { Request, Response } from "express";
 import connectToMongoDB from "./config/db";
-import userRouter from "./routes/routes";
+import userRouter from "./routes/userRoutes";
+import tododRouter from './routes/todoRoutes'
 
 // Connecting to MongoDb
 connectToMongoDB();
@@ -18,6 +19,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/user", userRouter);
+app.use("/api/todo", tododRouter); 
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
