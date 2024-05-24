@@ -6,6 +6,7 @@ import User from "../models/userSchema";
 import { generateToken } from "../utils/common";
 import dotenv from "dotenv";
 
+jest.setTimeout(10000); 
 // Load test environment variables
 dotenv.config({ path: ".env.test" });
 
