@@ -26,7 +26,7 @@ app.use("/api/test",(req,res)=>{
 let server: any;
 
 const startServer = async () => {
-  const dbUrl = process.env.MONGO_URI || "mongodb://localhost:27017/mydatabase";
+  const dbUrl = process.env.MONGODB_URL ?? ""
   await connectToMongoDB(dbUrl);
   server = app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
