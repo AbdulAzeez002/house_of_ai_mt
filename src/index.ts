@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.PORT ?? 8000;
 
 // Middleware to serve Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/swagger-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
