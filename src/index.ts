@@ -19,6 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 // Routes
 app.use("/api/user", userRouter);
 app.use("/api/todo", todoRouter);
+app.use("/api/test",(req,res)=>{
+  res.send("working fine")
+})
 
 let server: any;
 
